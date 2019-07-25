@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.co.insightech">
+
+	<resultMap id="MessageMap" type="jp.co.insightech.Message">
+		<result property="id" column="ID" />
+		<result property="name" column="NAME" />
+		<result property="mailaddress" column="MAILADDRESS" />
+		<result property="subject" column="SUBJECT" />
+		<result property="content" column="CONTENT" />
+		<result property="wordColor" column="WORD_COLOR" />
+		<result property="password" column="PASSWORD" />
+		<result property="postDate" column="POST_DATE" />
+	</resultMap>
+
+	<select id="getMessageList" resultMap="MessageMap">
+		SELECT * FROM MESSAGE_TABLE 
+		ORDER BY ID DESC
+	</select>
+
+	<insert id="register">
+		INSERT INTO MESSAGE_TABLE 
+		(ID, NAME, MAILADDRESS, SUBJECT, CONTENT, 
+		WORD_COLOR, PASSWORD, POST_DATE)
+		VALUES
+		(#{id}, #{name}, #{mailaddress},
+		#{subject}, #{content}, #{wordColor}, 
+		#{password}, #{postDate})
+	</insert>
+
+	<delete id="remove">
+		DELETE FROM MESSAGE_TABLE 
+		WHERE ID = #{id}
+	</delete>
+
+	<select id="getMessage" resultMap="MessageMap">
+		SELECT * FROM MESSAGE_TABLE 
+		WHERE ID = #{id}
+	</select>
+	
+	<select id="maxId" resultType="Integer">
+		SELECT MAX(ID) AS MAX_ID 
+		FROM MESSAGE_TABLE
+	</select>
+</mapper>
